@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>La voz cantada | Clases de canto desde una perspectiva funcional</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;1,400;1,500&family=Jost:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#F6F3EC; --surface:#EDE8DC; --ink:#2B2926; --muted:#6B665D; --line:#CFC8B8;
+  --sage:#9FAE98; --sage-deep:#5E6F58; --btn:#2B2926; --btn-ink:#F6F3EC;
+  --serif:"Cormorant Garamond",Georgia,"Times New Roman",serif;
+  --sans:"Jost","Helvetica Neue",Arial,sans-serif;
+  box-sizing:border-box; padding-top:env(safe-area-inset-top,0px); padding-bottom:env(safe-area-inset-bottom,0px);
+  color-scheme:light;
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){
+    --bg:#1F1E1B; --surface:#2A2825; --ink:#EEE9DD; --muted:#A39D90; --line:#454238;
+    --sage:#7F8F79; --sage-deep:#B5C4AE; --btn:#EEE9DD; --btn-ink:#1F1E1B; color-scheme:dark;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#1F1E1B; --surface:#2A2825; --ink:#EEE9DD; --muted:#A39D90; --line:#454238;
+  --sage:#7F8F79; --sage-deep:#B5C4AE; --btn:#EEE9DD; --btn-ink:#1F1E1B; color-scheme:dark;
+}
+*,*::before,*::after{box-sizing:inherit}
+html{scroll-behavior:smooth;scroll-padding-top:calc(env(safe-area-inset-top,0px) + 84px)}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--sans);font-weight:300;font-size:17px;line-height:1.65;-webkit-font-smoothing:antialiased}
+img,svg{max-width:100%}
+h1,h2,h3{font-family:var(--serif);font-weight:400;line-height:1.08;margin:0}
+h2{font-size:clamp(2.2rem,9vw,3rem);margin-bottom:1.2rem}
+em{font-style:italic;font-weight:400}
+p{margin:0 0 1rem}
+a{color:inherit}
+:focus-visible{outline:2px solid var(--sage-deep);outline-offset:3px;border-radius:999px}
+
+/* Navegación flotante en píldora */
+.nav{position:fixed;z-index:20;left:50%;transform:translateX(-50%);top:calc(env(safe-area-inset-top,0px) + 12px);
+  width:min(92%,520px);display:flex;justify-content:space-between;gap:4px;padding:6px 8px;border-radius:999px;
+  background:color-mix(in srgb,var(--bg) 70%,transparent);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border:1px solid var(--line)}
+.nav a{flex:1;text-align:center;text-decoration:none;font-size:.82rem;padding:8px 4px;border-radius:999px;color:var(--muted)}
+.nav a:hover{color:var(--ink);background:var(--surface)}
+
+.wrap{width:min(100% - 40px,560px);margin-inline:auto}
+section{padding:88px 0}
+
+/* Botones */
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:48px;padding:0 28px;border-radius:999px;border:1px solid var(--btn);
+  background:var(--btn);color:var(--btn-ink);font:400 .95rem var(--sans);text-decoration:none;cursor:pointer;transition:transform .3s ease,background .3s ease}
+.btn:hover{transform:translateY(-1px)}
+.btn.ghost{background:transparent;color:var(--ink);border-color:var(--ink)}
+.pill{display:inline-block;padding:6px 16px;border:1px solid var(--line);border-radius:999px;font-size:.85rem;color:var(--muted)}
+
+/* Hero */
+.hero{min-height:100svh;padding:120px 0 64px;display:flex;align-items:center;text-align:center;position:relative;overflow:hidden}
+.hero .rings{position:absolute;left:50%;top:50%;width:min(150vw,820px);aspect-ratio:1;transform:translate(-50%,-52%);z-index:0;pointer-events:none}
+.hero .rings circle{fill:none;stroke:var(--line);stroke-width:1;transform-origin:center;animation:breathe 9s ease-in-out infinite}
+.hero .rings circle:nth-child(2){animation-delay:-2.2s}.hero .rings circle:nth-child(3){animation-delay:-4.4s}.hero .rings circle:nth-child(4){animation-delay:-6.6s}
+@keyframes breathe{0%,100%{transform:scale(.94);opacity:.55}50%{transform:scale(1.04);opacity:1}}
+.hero .wrap{position:relative;z-index:1}
+.hero h1{font-size:clamp(3.6rem,17vw,6rem);margin-bottom:1.1rem}
+.hero .sub{font-family:var(--serif);font-style:italic;font-size:1.4rem;color:var(--muted);max-width:20ch;margin:0 auto 2rem;line-height:1.3}
+.hero .modal{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;margin-top:2rem}
+
+/* Imagen provisoria: reemplazar por foto propia */
+.ph{border-radius:24px;background:linear-gradient(160deg,var(--surface),color-mix(in srgb,var(--sage) 35%,var(--surface)));aspect-ratio:4/3;width:100%;overflow:hidden;position:relative}
+.ph img{width:100%;height:100%;object-fit:cover;display:block}
+
+/* Para quiénes */
+.lead{font-size:1.1rem}
+.profiles{display:grid;gap:12px;margin-top:2rem}
+.profile{padding:22px 24px;border:1px solid var(--line);border-radius:22px}
+.profile h3{font-size:1.6rem;margin-bottom:.3rem}
+.profile p{margin:0;color:var(--muted);font-size:.95rem}
+
+/* Contenidos */
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.card h3{font-size:1.35rem;margin:10px 0 4px}
+.card p{font-size:.85rem;line-height:1.5;color:var(--muted);margin:0}
+.card .ph{aspect-ratio:1}
+.card.wide{grid-column:1/-1}
+.note{margin-top:2rem;font-family:var(--serif);font-style:italic;font-size:1.5rem;line-height:1.3;text-align:center}
+
+/* Aranceles */
+.plans{display:grid;gap:14px;margin-top:1.5rem}
+.plan{background:var(--surface);border-radius:26px;padding:28px 26px}
+.plan h3{font-size:1.9rem;margin-bottom:.4rem}
+.plan p{color:var(--muted);font-size:.95rem}
+.plan .btn{width:100%;margin-top:.6rem}
+
+/* Footer */
+footer{background:var(--surface);border-radius:32px 32px 0 0;padding:64px 0 40px}
+footer h2{font-size:2.2rem}
+.info{display:grid;gap:22px;margin-top:1.5rem}
+.info h3{font-size:1.3rem;margin-bottom:.2rem}
+.info p{margin:0 0 .6rem;color:var(--muted);font-size:.95rem}
+.links{display:flex;flex-wrap:wrap;gap:10px;margin-top:.4rem}
+details{border:1px solid var(--line);border-radius:20px;padding:4px 20px}
+summary{cursor:pointer;min-height:48px;display:flex;align-items:center;font-family:var(--serif);font-size:1.3rem;list-style:none}
+summary::-webkit-details-marker{display:none}
+summary::after{content:"+";margin-left:auto;font-family:var(--sans);font-weight:300;transition:transform .3s ease}
+details[open] summary::after{transform:rotate(45deg)}
+details ul{margin:0 0 14px;padding-left:1.1rem;color:var(--muted);font-size:.92rem}
+details li{margin-bottom:.4rem}
+.copy{margin-top:2.5rem;text-align:center;font-size:.8rem;color:var(--muted)}
+
+/* WhatsApp fijo */
+.wa{position:fixed;z-index:20;right:16px;bottom:calc(env(safe-area-inset-bottom,0px) + 16px);width:56px;height:56px;border-radius:50%;
+  background:var(--sage-deep);display:grid;place-items:center;box-shadow:0 6px 20px rgba(0,0,0,.18)}
+.wa svg{width:28px;height:28px;fill:#fff}
+
+/* Aparición suave, una sola vez por bloque */
+.rv{opacity:0;transform:translateY(14px);transition:opacity 1.2s ease,transform 1.2s ease}
+.rv.in{opacity:1;transform:none}
+@media (prefers-reduced-motion:reduce){
+  .rv{opacity:1;transform:none;transition:none}
+  .hero .rings circle{animation:none}
+  html{scroll-behavior:auto}
+}
+
+/* Pantallas más grandes */
+@media (min-width:760px){
+  .wrap{width:min(100% - 80px,880px)}
+  .profiles{grid-template-columns:1fr 1fr}
+  .grid{grid-template-columns:repeat(3,1fr)}
+  .card.wide{grid-column:auto}
+  .plans{grid-template-columns:1fr 1fr}
+  .info{grid-template-columns:1fr 1fr}
+  .hero h1{font-size:7rem}
+}
+</style>
+</head>
+<body>
+
+<nav class="nav" aria-label="Principal">
+  <a href="#clases">Clases</a>
+  <a href="#contenidos">Contenidos</a>
+  <a href="#aranceles">Aranceles</a>
+  <a href="#contacto">Contacto</a>
+</nav>
+
+<main>
+<!-- 1. Hero -->
+<section class="hero" id="inicio">
+  <svg class="rings" viewBox="0 0 800 800" aria-hidden="true">
+    <circle cx="400" cy="400" r="120"/><circle cx="400" cy="400" r="200"/><circle cx="400" cy="400" r="285"/><circle cx="400" cy="400" r="380"/>
+  </svg>
+  <div class="wrap">
+    <h1>La voz <em>cantada</em></h1>
+    <p class="sub">Clases de canto desde una perspectiva funcional</p>
+    <a class="btn" href="https://wa.me/549XXXXXXXXXX?text=Hola%2C%20quiero%20agendar%20una%20clase" target="_blank" rel="noopener">Agendá tu clase</a>
+    <div class="modal">
+      <span class="pill">Virtual</span>
+      <span class="pill">Presencial</span>
+      <span class="pill">Horarios flexibles, a tu medida</span>
+    </div>
+  </div>
+</section>
+
+<!-- 2. Para quiénes -->
+<section id="clases">
+  <div class="wrap">
+    <h2 class="rv">Una clase para <em>cada voz</em></h2>
+    <p class="lead rv">Las clases acompañan a quienes cantan, a quienes recién se inician y a toda persona que trabaja con su voz. Cada proceso parte de lo que tu voz necesita hoy.</p>
+    <div class="profiles">
+      <div class="profile rv"><h3>Cantantes</h3><p>Para profundizar en la técnica, el repertorio y la expresión de tu propia voz.</p></div>
+      <div class="profile rv"><h3>Quienes se inician</h3><p>Para dar los primeros pasos en el canto con calma y sin exigencias previas.</p></div>
+      <div class="profile rv"><h3>Docentes y oradoras/es</h3><p>Para cuidar la voz hablada y sostenerla a lo largo de la jornada.</p></div>
+      <div class="profile rv"><h3>Actrices, actores y locución</h3><p>Para ampliar recursos de proyección, resonancia y expresividad.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- 3. Contenidos -->
+<section id="contenidos">
+  <div class="wrap">
+    <h2 class="rv">Lo que <em>trabajamos</em> en cada clase</h2>
+    <div class="grid">
+      <!-- Para usar una foto propia: reemplazar el contenido de cada .ph por <img src="foto.jpg" alt="..."> -->
+      <article class="card rv"><div class="ph"></div><h3>Técnica vocal</h3><p>Fonación, resonancia y registros desde una mirada funcional.</p></article>
+      <article class="card rv"><div class="ph"></div><h3>Anatomía funcional</h3><p>Conocer el instrumento a través del método Rabine.</p></article>
+      <article class="card rv"><div class="ph"></div><h3>Repertorio</h3><p>Está presente en todas las clases, siempre.</p></article>
+      <article class="card rv"><div class="ph"></div><h3>Afinación</h3><p>Escucha, entonación y precisión interválica.</p></article>
+      <article class="card rv"><div class="ph"></div><h3>Sensopercepción</h3><p>Registrar la voz desde la sensación y el cuerpo.</p></article>
+      <article class="card rv"><div class="ph"></div><h3>Técnicas de grabación</h3><p>Micrófono, escucha crítica y registro de la propia voz.</p></article>
+    </div>
+    <p class="note rv">El recorrido lo define la búsqueda de cada estudiante.</p>
+  </div>
+</section>
+
+<!-- 4. Aranceles -->
+<section id="aranceles">
+  <div class="wrap">
+    <h2 class="rv">Dos formas de <em>abonar</em></h2>
+    <p class="rv">Elegí la modalidad que mejor acompañe tu ritmo. Consultá los valores y la disponibilidad.</p>
+    <div class="plans">
+      <div class="plan rv"><h3>Clase suelta</h3><p>Una clase por vez, sin compromiso. Ideal para conocer el espacio o para quienes necesitan flexibilidad total.</p><a class="btn ghost" href="https://wa.me/549XXXXXXXXXX?text=Hola%2C%20quiero%20consultar%20por%20clase%20suelta" target="_blank" rel="noopener">Consultar</a></div>
+      <div class="plan rv"><h3>Modalidad mensual</h3><p>Un proceso sostenido en el tiempo, con continuidad para trabajar técnica y repertorio.</p><a class="btn ghost" href="https://wa.me/549XXXXXXXXXX?text=Hola%2C%20quiero%20consultar%20por%20la%20modalidad%20mensual" target="_blank" rel="noopener">Consultar</a></div>
+    </div>
+  </div>
+</section>
+</main>
+
+<!-- Footer -->
+<footer id="contacto">
+  <div class="wrap">
+    <h2>Encontrémonos</h2>
+    <div class="info">
+      <div>
+        <h3>Dirección</h3>
+        <p>Calle y número, barrio, ciudad.</p>
+        <a class="btn ghost" href="https://www.google.com/maps/search/?api=1&query=Buenos+Aires" target="_blank" rel="noopener">Cómo llegar</a>
+      </div>
+      <div>
+        <h3>Contacto</h3>
+        <div class="links">
+          <a class="pill" href="https://wa.me/549XXXXXXXXXX" target="_blank" rel="noopener">WhatsApp</a>
+          <a class="pill" href="mailto:hola@lavozcantada.com">Correo</a>
+          <a class="pill" href="https://instagram.com/" target="_blank" rel="noopener">Instagram</a>
+        </div>
+      </div>
+    </div>
+    <details style="margin-top:28px">
+      <summary>Política de las clases</summary>
+      <ul>
+        <li>Las clases se agendan con anticipación, por WhatsApp.</li>
+        <li>Si necesitás reprogramar, avisá con 24 horas de anticipación.</li>
+        <li>Las clases virtuales requieren conexión estable y auriculares.</li>
+        <li>Completá este texto con tus condiciones de pago y cancelación.</li>
+      </ul>
+    </details>
+    <p class="copy">© 2026 La voz cantada. Todos los derechos reservados.</p>
+  </div>
+</footer>
+
+<a class="wa" href="https://wa.me/549XXXXXXXXXX" target="_blank" rel="noopener" aria-label="Escribinos por WhatsApp">
+  <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2Zm5.8 14.2c-.2.7-1.4 1.3-2 1.4-.5.1-1.2.1-1.9-.1-.4-.1-1-.3-1.7-.6-3-1.3-4.9-4.3-5-4.5-.1-.2-1.2-1.6-1.2-3s.8-2.1 1-2.4c.3-.3.6-.3.8-.3h.6c.2 0 .4 0 .6.5l.8 2c.1.2.1.4 0 .5l-.3.5-.4.4c-.1.2-.3.3-.1.6.2.3.7 1.2 1.5 1.9 1 .9 1.9 1.2 2.200 1.300.3.1.4.1.6-.1l.8-1c.2-.3.4-.2.6-.1l1.900.9c.3.1.5.2.5.3.1.2.1.8-.1 1.500Z"/></svg>
+</a>
+
+<script>
+(function(){
+  var els=document.querySelectorAll('.rv');
+  if(!('IntersectionObserver' in window)){els.forEach(function(e){e.classList.add('in')});return;}
+  var io=new IntersectionObserver(function(entries){
+    entries.forEach(function(en){if(en.isIntersecting){en.target.classList.add('in');io.unobserve(en.target)}});
+  },{threshold:.15});
+  els.forEach(function(e){io.observe(e)});
+})();
+</script>
+</body>
+</html>
